@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+ * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #131419;
+}
+
+.form {
+  position: relative;
+  width: 430px;
+  padding: 40px 40px 60px;
+  border-radius: 10px;
+  background: #131419;
+  text-align: center;
+  box-shadow: -5px -5px 10px rgba(255, 255, 255, 0.05),
+    5px 5px 15px rgba(0, 0, 0, 0.5);
+}
+.form h2 {
+  color: #c7c7c7;
+  font-weight: 500;
+  /* text-transform: uppercase; */
+  letter-spacing: 4px;
+}
+.form h3 {
+  color: #c7c7c7;
+  font-weight: 500;
+  /* text-transform: uppercase; */
+  letter-spacing: 4px;
+}
+.form p {
+  color: #c7c7c7;
+  font-weight: 500;
+  /* text-transform: uppercase; */
+  letter-spacing: 4px;
+  text-align: left;
+}
+.form .input {
+  margin-top: 40px;
+  text-align: left;
+}
+.form .input .inputBox {
+  margin-top: 20px;
+}
+.form .input .inputBox label {
+  display: block;
+  color: #868686;
+  margin-bottom: 5px;
+  font-size: 18px;
+}
+.form .input .inputBox input {
+  width: 100%;
+  height: 50px;
+  color: #03a9f4;
+  background: #131419;
+  border: none;
+  outline: none;
+  border-radius: 40px;
+  padding: 5px 15px;
+  font-size: 18px;
+  box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.1),
+    inset 2px 2px 6px rgba(0, 0, 0, 0.8);
+}
+.form .input .inputBox input[type="submit"] {
+  margin-top: 20px;
+  box-shadow: -2px -2px 6px rgba(255, 255, 255, 0.1),
+    2px 2px 6px rgba(0, 0, 0, 0.8);
+}
+.form .input .inputBox input[type="submit"]:active {
+  color: #006c9c;
+  margin-top: 20px;
+  box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.1),
+    inset 2px 2px 6px rgba(0, 0, 0, 0.8);
+}
+.form .input .inputBox input::placeholder {
+  color: #555;
+  font-size: 18px;
+}
+.forget {
+  margin-top: 30px;
+  color: #555;
+}
+.forget a {
+  color: #ff0047;
+}
+
+
+</style>
+</head>
+<body>
+ <div class="form">
+  <h2>CRED assignment</h2>
+  <div class="input">
+    <div class="inputBox">
+      <p>first things first</p>
+      <a href="https://ramanasriram.notion.site/CRED-Pay-Assignment-Product-Intern-69bb839aa229468d87e10b07a4ef8a05" target="_blank"><input type="submit" value="payment page design"></a>
+      <p>*opens a public notion doc</p>
+    </div>
+    <br>
+    <br>
+    <div>
+      <p>before the user reaches the payment page, details like</p>
+    </div>
+    <div class="inputBox">
+      <label>full name</label>
+      <input type="text" placeholder="first name + last name">
+    </div>
+    <div class="inputBox">
+      <label>address</label>
+      <input type="text" placeholder="house number + place + pin code">
+    </div>
+    <div class="inputBox">
+      <label>phone number</label>
+      <input type="text" placeholder="+91 xxxxxxxxxx">
+    </div>
+    <br>
+    <div>
+      <p>are captured along with order value so they can </p>
+    </div>
+</div>
+
+<button id="rzp-button1"> pay now </button>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+var options = {
+    "key": "rzp_test_5SWCb6yuAXzV7A", // Enter the Key ID generated from the Dashboard
+    "amount": "50000", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "CRED assignment",
+    "description": "Test Transaction",
+    "image": "https://lever-client-logos.s3.us-west-2.amazonaws.com/9f8ae7a1-e18b-49a4-98cc-32d767d4663c-1621589042415.png",
+    "order_id": "order_I6xlqSHgOSA2DR", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    "handler": function (response){
+        alert(response.razorpay_payment_id);
+        alert(response.razorpay_order_id);
+        alert(response.razorpay_signature)
+    },
+    "prefill": {
+        "name": "Ramana",
+        "email": "ramana@cred.club",
+        "contact": "9999999999"
+    },
+    "notes": {
+        "address": "Razorpay Corporate Office"
+    },
+    "theme": {
+        "color": "#131419"
+    }
+};
+var rzp1 = new Razorpay(options);
+rzp1.on('payment.failed', function (response){
+        alert(response.error.code);
+        alert(response.error.description);
+        alert(response.error.source);
+        alert(response.error.step);
+        alert(response.error.reason);
+        alert(response.error.metadata.order_id);
+        alert(response.error.metadata.payment_id);
+});
+document.getElementById('rzp-button1').onclick = function(e){
+    rzp1.open();
+    e.preventDefault();
+}
+</script>
+<div>
+  <p>*please choose netbanking as an option to reach the success/failure demo page </p>
+</div>
+</body>
+</html> 
